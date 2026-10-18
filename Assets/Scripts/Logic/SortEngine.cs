@@ -37,8 +37,17 @@ public static class SortEngine
                 break;
 
             case SortType.Merge:
+                RunMergeSort(workArray, steps);
+                break;
+
             case SortType.Heap:
+                RunHeapSort(workArray, steps);
+                break;
+
             case SortType.Shell:
+                RunShellSort(workArray, steps);
+                break;
+
             case SortType.Counting:
             case SortType.Tim:
             case SortType.Bogo:
@@ -250,6 +259,194 @@ public static class SortEngine
         if (arr.Length > 1)
         {
             QuickSortRecursive(0, arr.Length - 1);
+        }
+    }
+
+    /// <summary>
+    /// マージソートの実装
+    /// </summary>
+    private static void RunMergeSort(int[] arr, List<SortStep> steps)
+    {
+        // 内部関数：比較処理とステップ記録 (arr[i] > arr[j] なら true)
+        bool Compare(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Compare, i, j));
+            return arr[i] > arr[j];
+        }
+
+        // 内部関数：値書き込み処理とステップ記録
+        void Set(int index, int value)
+        {
+            steps.Add(new SortStep(StepKind.Set, index, value));
+            arr[index] = value;
+        }
+
+        // 2つのソート済み部分配列 [left, mid] と [mid + 1, right] をマージする関数
+        void Merge(int left, int mid, int right)
+        {
+            int[] temp = new int[right - left + 1];
+            int i = left;
+            int j = mid + 1;
+            int k = 0;
+
+            while (i <= mid && j <= right)
+            {
+                // arr[i] > arr[j] であれば右側の要素を先に追加、そうでなければ左側を先に追加
+                if (Compare(i, j))
+                {
+                    temp[k++] = arr[j++];
+                }
+                else
+                {
+                    temp[k++] = arr[i++];
+                }
+            }
+
+            // 左側の残りの要素をコピー
+            while (i <= mid)
+            {
+                temp[k++] = arr[i++];
+            }
+
+            // 右側の残りの要素をコピー
+            while (j <= right)
+            {
+                temp[k++] = arr[j++];
+            }
+
+            // 一時配列から元の配列へ Set 関数経由で書き戻す
+            for (int idx = 0; idx < temp.Length; idx++)
+            {
+                Set(left + idx, temp[idx]);
+            }
+        }
+
+        // 再帰処理関数
+        void MergeSortRecursive(int left, int right)
+        {
+            if (left < right)
+            {
+                int mid = left + (right - left) / 2;
+
+                MergeSortRecursive(left, mid);
+                MergeSortRecursive(mid + 1, right);
+
+                Merge(left, mid, right);
+            }
+        }
+
+        // ソート実行（配列全体）
+        if (arr.Length > 1)
+        {
+            MergeSortRecursive(0, arr.Length - 1);
+        }
+    }
+
+    /// <summary>
+    /// ヒープソートの実装
+    /// </summary>
+    private static void RunHeapSort(int[] arr, List<SortStep> steps)
+    {
+        int n = arr.Length;
+
+        // 内部関数：比較処理とステップ記録 (arr[i] > arr[j] なら true)
+        bool Compare(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Compare, i, j));
+            return arr[i] > arr[j];
+        }
+
+        // 内部関数：交換処理とステップ記録
+        void Swap(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Swap, i, j));
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+
+        // 指定のノードを根とする部分木を最大ヒープに再構築する関数
+        void Heapify(int heapSize, int root)
+        {
+            int largest = root;
+            int left = 2 * root + 1;
+            int right = 2 * root + 2;
+
+            // 左の子が根より大きい場合 (arr[left] > arr[largest])
+            if (left < heapSize && Compare(left, largest))
+            {
+                largest = left;
+            }
+
+            // 右の子が現在の最大値より大きい場合 (arr[right] > arr[largest])
+            if (right < heapSize && Compare(right, largest))
+            {
+                largest = right;
+            }
+
+            // 最大値が根でない場合、交換して再帰的にヒープ化
+            if (largest != root)
+            {
+                Swap(root, largest);
+                Heapify(heapSize, largest);
+            }
+        }
+
+        // 1. 最大ヒープの構築（末尾の親ノードから順に適用）
+        for (int i = n / 2 - 1; i >= 0; i--)
+        {
+            Heapify(n, i);
+        }
+
+        // 2. ヒープから1つずつ要素を取り出して末尾へ移動
+        for (int i = n - 1; i > 0; i--)
+        {
+            // 現在の根（最大値）を未確定領域の末尾へ移動
+            Swap(0, i);
+
+            // 残りのヒープ領域を再構築
+            Heapify(i, 0);
+        }
+    }
+
+    /// <summary>
+    /// シェルソートの実装
+    /// </summary>
+    private static void RunShellSort(int[] arr, List<SortStep> steps)
+    {
+        int n = arr.Length;
+
+        // 内部関数：比較処理とステップ記録 (arr[i] > arr[j] なら true)
+        bool Compare(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Compare, i, j));
+            return arr[i] > arr[j];
+        }
+
+        // 内部関数：交換処理とステップ記録
+        void Swap(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Swap, i, j));
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+
+        // 間隔 gap を n/2, n/4, ..., 1 と小さくしていく
+        for (int gap = n / 2; gap > 0; gap /= 2)
+        {
+            // 間隔 gap で挿入ソートを行う
+            for (int i = gap; i < n; i++)
+            {
+                int j = i;
+
+                // 距離 gap 離れた要素と比較し、左の方が大きければ交換して戻っていく
+                while (j >= gap && Compare(j - gap, j))
+                {
+                    Swap(j - gap, j);
+                    j -= gap;
+                }
+            }
         }
     }
 }
