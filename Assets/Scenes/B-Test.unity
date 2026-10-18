@@ -2219,6 +2219,7 @@ GameObject:
   - component: {fileID: 920049015}
   - component: {fileID: 920049016}
   - component: {fileID: 920049017}
+  - component: {fileID: 920049018}
   m_Layer: 0
   m_Name: Tester
   m_TagString: Untagged
@@ -2287,7 +2288,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920049012}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a9c660b2b6fcc94cb18a870e0d5ab7a, type: 3}
   m_Name: 
@@ -2295,6 +2296,22 @@ MonoBehaviour:
   bet: {fileID: 1408794378}
   left: {fileID: 1093017443}
   right: {fileID: 1629474388}
+--- !u!114 &920049018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920049012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c1f5ecb5585ec4980e0f2814e713a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RealSortTester
+  sortAnimator: {fileID: 1419901887}
+  type: 9
+  sequence: 07000000020000000900000004000000010000000600000003000000
+  maxTotalSeconds: 10
 --- !u!1 &1093017439
 GameObject:
   m_ObjectHideFlags: 0
