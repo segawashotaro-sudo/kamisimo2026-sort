@@ -2309,7 +2309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RealSortTester
   sortAnimator: {fileID: 1419901887}
-  type: 9
+  type: 1
   sequence: 07000000020000000900000004000000010000000600000003000000
   maxTotalSeconds: 10
 --- !u!1 &1093017439
