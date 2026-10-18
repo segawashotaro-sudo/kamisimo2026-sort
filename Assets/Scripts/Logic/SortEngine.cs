@@ -49,7 +49,13 @@ public static class SortEngine
                 break;
 
             case SortType.Counting:
+                RunCountingSort(workArray, steps);
+                break;
+
             case SortType.Tim:
+                RunTimSort(workArray, steps);
+                break;
+
             case SortType.Bogo:
                 throw new NotImplementedException($"{type} はまだ実装されていません。");
 
@@ -445,6 +451,162 @@ public static class SortEngine
                 {
                     Swap(j - gap, j);
                     j -= gap;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// カウントソートの実装
+    /// </summary>
+    private static void RunCountingSort(int[] arr, List<SortStep> steps)
+    {
+        if (arr.Length == 0)
+        {
+            return;
+        }
+
+        // 内部関数：値書き込み処理とステップ記録
+        void Set(int index, int value)
+        {
+            steps.Add(new SortStep(StepKind.Set, index, value));
+            arr[index] = value;
+        }
+
+        // 1. 最小値と最大値を探索
+        int min = arr[0];
+        int max = arr[0];
+        for (int i = 1; i < arr.Length; i++)
+        {
+            if (arr[i] < min)
+            {
+                min = arr[i];
+            }
+            if (arr[i] > max)
+            {
+                max = arr[i];
+            }
+        }
+
+        // 2. 度数分布表（カウント配列）の作成
+        int range = max - min + 1;
+        int[] count = new int[range];
+        for (int i = 0; i < arr.Length; i++)
+        {
+            count[arr[i] - min]++;
+        }
+
+        // 3. カウントを元に配列に書き戻す (Set を使用)
+        int currentIndex = 0;
+        for (int i = 0; i < range; i++)
+        {
+            while (count[i] > 0)
+            {
+                Set(currentIndex, i + min);
+                currentIndex++;
+                count[i]--;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Timソート（簡易版）の実装
+    /// </summary>
+    private static void RunTimSort(int[] arr, List<SortStep> steps)
+    {
+        int n = arr.Length;
+        const int RUN = 4; // 判定ブロックサイズ
+
+        // 内部関数：比較処理とステップ記録
+        bool Compare(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Compare, i, j));
+            return arr[i] > arr[j];
+        }
+
+        // 内部関数：交換処理とステップ記録
+        void Swap(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Swap, i, j));
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+
+        // 内部関数：値書き込み処理とステップ記録
+        void Set(int index, int value)
+        {
+            steps.Add(new SortStep(StepKind.Set, index, value));
+            arr[index] = value;
+        }
+
+        // 部分配列を挿入ソートする関数
+        void InsertionSortRange(int left, int right)
+        {
+            for (int i = left + 1; i <= right; i++)
+            {
+                int j = i;
+                while (j > left && Compare(j - 1, j))
+                {
+                    Swap(j - 1, j);
+                    j--;
+                }
+            }
+        }
+
+        // 2つのソート済み部分配列 [left, mid] と [mid + 1, right] をマージする関数
+        void Merge(int left, int mid, int right)
+        {
+            int[] temp = new int[right - left + 1];
+            int i = left;
+            int j = mid + 1;
+            int k = 0;
+
+            while (i <= mid && j <= right)
+            {
+                if (Compare(i, j))
+                {
+                    temp[k++] = arr[j++];
+                }
+                else
+                {
+                    temp[k++] = arr[i++];
+                }
+            }
+
+            while (i <= mid)
+            {
+                temp[k++] = arr[i++];
+            }
+
+            while (j <= right)
+            {
+                temp[k++] = arr[j++];
+            }
+
+            for (int idx = 0; idx < temp.Length; idx++)
+            {
+                Set(left + idx, temp[idx]);
+            }
+        }
+
+        // 1. 長さ RUN（4）ごとのブロックに分けて挿入ソートを適用
+        for (int i = 0; i < n; i += RUN)
+        {
+            InsertionSortRange(i, Math.Min(i + RUN - 1, n - 1));
+        }
+
+        // 2. ブロックサイズを倍々にしながらマージしていく
+        for (int size = RUN; size < n; size = 2 * size)
+        {
+            for (int left = 0; left < n; left += 2 * size)
+            {
+                int mid = left + size - 1;
+                int right = Math.Min(left + 2 * size - 1, n - 1);
+
+                if (mid < right)
+                {
+                    Merge(left, mid, right);
                 }
             }
         }

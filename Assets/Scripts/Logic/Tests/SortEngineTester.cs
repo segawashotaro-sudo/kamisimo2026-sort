@@ -3,7 +3,7 @@ using UnityEngine;
 public class SortEngineTester : MonoBehaviour
 {
     // 試したいソートをここに並べる。実装したら1つずつ追加する
-    SortType[] targets = { SortType.Bubble, SortType.Selection, SortType.Insertion, SortType.Quick, SortType.Merge, SortType.Heap, SortType.Shell};
+    SortType[] targets = { SortType.Bubble, SortType.Selection, SortType.Insertion, SortType.Quick, SortType.Merge, SortType.Heap, SortType.Shell, SortType.Counting, SortType.Tim };
 
     void Start()
     {
