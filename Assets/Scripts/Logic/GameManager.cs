@@ -1,3 +1,4 @@
+// 置き場所: Assets/Scripts/Logic/GameManager.cs
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ public enum GamePhase
 public class GameManager : MonoBehaviour
 {
     // --- イベント（UI担当のBさんがアタッチして使用） ---
-    public event Action<int, int[]> OnRoundStarted;      // (現在のラウンド数, 生成された数列)
+    public event Action<int, int[]> OnRoundStarted;       // (現在のラウンド数, 生成された数列)
     public event Action OnChoicePhaseStarted;           // プレイヤー入力受付開始
     public event Action<RoundResult> OnRoundResolved;    // ラウンド結果決定
     public event Action<PlayerState> OnGameOver;         // ゲーム終了 (勝者)
@@ -154,6 +155,30 @@ public class GameManager : MonoBehaviour
         // UIへ通知
         OnRoundStarted?.Invoke(CurrentRound, CurrentSequence);
         OnChoicePhaseStarted?.Invoke();
+
+        // CPUプレイヤーの自動カード選択・ベット
+        ProcessCpuChoices();
+    }
+
+    /// <summary>
+    /// 生存しているCPUプレイヤーの選択を自動実行する
+    /// </summary>
+    private void ProcessCpuChoices()
+    {
+        // currentChoices への追加に伴うループ中の変更を避けるためToListで抽出
+        var cpuPlayers = players.Where(p => !p.IsOut && p.IsCpu).ToList();
+
+        foreach (var cpu in cpuPlayers)
+        {
+            // フェーズが切り替わっている可能性（プレイヤーが全員CPUなどで既にResolveされた場合）を考慮
+            if (CurrentPhase != GamePhase.ChoosingCards)
+            {
+                break;
+            }
+
+            var (card, bet) = CpuPlayer.Decide(cpu, CurrentSequence);
+            SubmitChoice(cpu, card, bet);
+        }
     }
 
     private void ResolveRound()

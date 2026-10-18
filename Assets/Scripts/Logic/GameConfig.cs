@@ -12,4 +12,7 @@ public static class GameConfig
     public const int ValueMin = 1;          // 数列の値の最小
     public const int ValueMax = 9;          // 数列の値の最大
     public const int BogoMaxSteps = 500;    // ボゴソートの打ち切りステップ数（仮）
+    public const float CpuBestChoiceRate = 0.85f; // CPUが最善のカードを選ぶ確率
+    public const float CpuBogoRate = 0.1f;       // CPUがボゴを持っているときに賭けで出す確率
+    public const int CpuMaxBetRate = 45;         // CPUが一度に賭ける上限（持ち点の何％か）
 }
