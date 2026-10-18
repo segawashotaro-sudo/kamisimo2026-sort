@@ -29,6 +29,9 @@ public static class SortEngine
                 break;
 
             case SortType.Insertion:
+                RunInsertionSort(workArray, steps);
+                break;
+
             case SortType.Quick:
             case SortType.Merge:
             case SortType.Heap:
@@ -137,6 +140,43 @@ public static class SortEngine
             if (minIndex != i)
             {
                 Swap(i, minIndex);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 挿入ソートの実装
+    /// </summary>
+    private static void RunInsertionSort(int[] arr, List<SortStep> steps)
+    {
+        int n = arr.Length;
+
+        // 内部関数：比較処理とステップ記録
+        bool Compare(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Compare, i, j));
+            return arr[i] > arr[j];
+        }
+
+        // 内部関数：交換処理とステップ記録
+        void Swap(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Swap, i, j));
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+
+        // 挿入ソートのメインループ
+        for (int i = 1; i < n; i++)
+        {
+            int j = i;
+
+            // 左隣の要素と比較し、左の方が大きければ隣同士を交換しながら左へ移動
+            while (j > 0 && Compare(j - 1, j))
+            {
+                Swap(j - 1, j);
+                j--;
             }
         }
     }
