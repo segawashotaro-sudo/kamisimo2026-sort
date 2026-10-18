@@ -57,7 +57,8 @@ public static class SortEngine
                 break;
 
             case SortType.Bogo:
-                throw new NotImplementedException($"{type} はまだ実装されていません。");
+                gaveUp = RunBogoSort(workArray, steps);
+                break;
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -610,5 +611,74 @@ public static class SortEngine
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// ボゴソートの実装（ gaveUp の真偽値を返す ）
+    /// </summary>
+    private static bool RunBogoSort(int[] arr, List<SortStep> steps)
+    {
+        int n = arr.Length;
+
+        // 内部関数：比較処理とステップ記録
+        bool Compare(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Compare, i, j));
+            return arr[i] > arr[j];
+        }
+
+        // 配列が昇順にソートされているか確認する関数
+        bool IsSorted()
+        {
+            for (int i = 0; i < n - 1; i++)
+            {
+                // 左の方が大きい場合は未ソート (上限チェック付き)
+                if (Compare(i, i + 1))
+                {
+                    return false;
+                }
+
+                if (steps.Count >= GameConfig.BogoMaxSteps)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // 配列をシャッフルし、ステップを記録する関数
+        void Shuffle()
+        {
+            // フィッシャー–イェーツのシャッフル（UnityEngine.Random を使用）
+            for (int i = n - 1; i > 0; i--)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, i + 1);
+                int temp = arr[i];
+                arr[i] = arr[randomIndex];
+                arr[randomIndex] = temp;
+            }
+
+            // シャッフル後の配列状態をコピーして記録
+            int[] newOrder = (int[])arr.Clone();
+            steps.Add(new SortStep(StepKind.Shuffle, 0, 0, newOrder));
+        }
+
+        // メインループ：ソートされているか判定し、並んでいなければシャッフル
+        while (!IsSorted())
+        {
+            if (steps.Count >= GameConfig.BogoMaxSteps)
+            {
+                return true; // 上限に達したため gaveUp = true
+            }
+
+            Shuffle();
+
+            if (steps.Count >= GameConfig.BogoMaxSteps)
+            {
+                return true; // シャッフル後に上限に達した場合
+            }
+        }
+
+        return false; // ソート成功（gaveUp = false）
     }
 }
