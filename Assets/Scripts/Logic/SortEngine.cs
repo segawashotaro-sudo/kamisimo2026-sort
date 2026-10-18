@@ -33,6 +33,9 @@ public static class SortEngine
                 break;
 
             case SortType.Quick:
+                RunQuickSort(workArray, steps);
+                break;
+
             case SortType.Merge:
             case SortType.Heap:
             case SortType.Shell:
@@ -178,6 +181,75 @@ public static class SortEngine
                 Swap(j - 1, j);
                 j--;
             }
+        }
+    }
+
+    /// <summary>
+    /// クイックソートの実装
+    /// </summary>
+    private static void RunQuickSort(int[] arr, List<SortStep> steps)
+    {
+        // 内部関数：比較処理とステップ記録 (arr[i] > arr[j] なら true)
+        bool Compare(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Compare, i, j));
+            return arr[i] > arr[j];
+        }
+
+        // 内部関数：交換処理とステップ記録
+        void Swap(int i, int j)
+        {
+            steps.Add(new SortStep(StepKind.Swap, i, j));
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+
+        // パーティション分割関数（右端 high をピボットとする）
+        int Partition(int low, int high)
+        {
+            int pivotIndex = high; // 右端の要素をピボットとする
+            int i = low - 1;       // ピボット以下の要素を置く境界インデックス
+
+            for (int j = low; j < high; j++)
+            {
+                // ピボット(pivotIndex) > arr[j] かどうかを判定 (Compare(pivotIndex, j) が true)
+                if (Compare(pivotIndex, j))
+                {
+                    i++;
+                    if (i != j)
+                    {
+                        Swap(i, j);
+                    }
+                }
+            }
+
+            // ピボットを適切な位置へ移動
+            if (i + 1 != high)
+            {
+                Swap(i + 1, high);
+            }
+
+            return i + 1;
+        }
+
+        // 再帰処理関数
+        void QuickSortRecursive(int low, int high)
+        {
+            if (low < high)
+            {
+                int pi = Partition(low, high);
+
+                // ピボットの左右の部分配列を再帰的にソート
+                QuickSortRecursive(low, pi - 1);
+                QuickSortRecursive(pi + 1, high);
+            }
+        }
+
+        // ソート実行（配列全体）
+        if (arr.Length > 1)
+        {
+            QuickSortRecursive(0, arr.Length - 1);
         }
     }
 }
