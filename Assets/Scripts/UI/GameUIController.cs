@@ -10,6 +10,7 @@ public class GameUIController : MonoBehaviour
 {
     [Header("参照管理")]
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private TitlePanel titlePanel;
 
     [Header("プレイヤーパネル")]
     [SerializeField] private PlayerPanel playerPanelLeft;   // あなた（人間）
@@ -47,17 +48,13 @@ public class GameUIController : MonoBehaviour
             return;
         }
 
-        // 1. プレイヤーStateの生成（あなた と CPU）
-        humanPlayer = new PlayerState("あなた", isCpu: false, initialPoints: GameConfig.InitialPoints);
-        cpuPlayer = new PlayerState("CPU", isCpu: true, initialPoints: GameConfig.InitialPoints);
-
-        // 2. GameManager のイベントに登録
+        // 1. GameManager のイベントに登録
         gameManager.OnRoundStarted += HandleRoundStarted;
         gameManager.OnChoicePhaseStarted += HandleChoicePhaseStarted;
         gameManager.OnRoundResolved += HandleRoundResolved;
         gameManager.OnGameOver += HandleGameOver;
 
-        // 3. UIのイベント登録
+        // 2. UIのイベント登録
         if (handView != null)
         {
             handView.OnCardSelected += HandleCardSelected;
@@ -74,9 +71,17 @@ public class GameUIController : MonoBehaviour
             nextButton.gameObject.SetActive(false);
         }
 
-        // 4. ゲームの開始
-        List<PlayerState> initialPlayers = new List<PlayerState> { humanPlayer, cpuPlayer };
-        gameManager.StartGame(initialPlayers, GameConfig.DefaultRounds);
+        // 3. TitlePanel のイベント登録と表示
+        if (titlePanel != null)
+        {
+            titlePanel.OnStart += HandleTitleStart;
+            titlePanel.Show();
+        }
+        else
+        {
+            // TitlePanel が未設定の場合は直接ゲームを開始するフォールバック
+            StartGameSequence();
+        }
     }
 
     private void OnDestroy()
@@ -104,6 +109,33 @@ public class GameUIController : MonoBehaviour
         {
             nextButton.onClick.RemoveListener(HandleNextButtonClicked);
         }
+
+        if (titlePanel != null)
+        {
+            titlePanel.OnStart -= HandleTitleStart;
+        }
+    }
+
+    /// <summary>
+    /// タイトル画面のスタートボタンが押された時の処理
+    /// </summary>
+    private void HandleTitleStart()
+    {
+        StartGameSequence();
+    }
+
+    /// <summary>
+    /// ゲームの初期化と開始処理
+    /// </summary>
+    private void StartGameSequence()
+    {
+        // プレイヤーStateの生成（あなた と CPU）
+        humanPlayer = new PlayerState("あなた", isCpu: false, initialPoints: GameConfig.InitialPoints);
+        cpuPlayer = new PlayerState("CPU", isCpu: true, initialPoints: GameConfig.InitialPoints);
+
+        // ゲームの開始
+        List<PlayerState> initialPlayers = new List<PlayerState> { humanPlayer, cpuPlayer };
+        gameManager.StartGame(initialPlayers, GameConfig.DefaultRounds);
     }
 
     // --- イベントハンドラ ---
