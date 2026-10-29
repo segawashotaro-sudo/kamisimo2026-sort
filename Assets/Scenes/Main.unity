@@ -178,6 +178,38 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 3043134620751853406, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043134620751853406, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043134620751853406, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043134620751853406, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043134620751853406, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3474238721593727774, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3474238721593727774, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3474238721593727774, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5085341692011628532, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -185,6 +217,14 @@ PrefabInstance:
     - target: {fileID: 5622848549117091672, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_VerticalAlignment
       value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 6531403724190865508, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Name
+      value: CloseText
+      objectReference: {fileID: 0}
+    - target: {fileID: 6531403724190865508, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7031902257885527179, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -285,6 +325,10 @@ PrefabInstance:
     - target: {fileID: 7287221252082179644, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7451147917774273144, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8275719197833086348, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_IsActive

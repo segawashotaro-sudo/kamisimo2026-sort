@@ -28,13 +28,18 @@ public class PlayerPanel : MonoBehaviour
     }
 
     // 名前と持ち点を表示し、カードを隠し、状態を空にする
+// 名前を表示し、カードを隠し、状態を空にする（持ち点の数値アニメ状態は維持）
     public void Setup(string playerName, int points)
     {
         if (nameText != null) nameText.text = playerName;
 
-        StopPointsAnimation();
-        displayedPoints = points;
-        UpdatePointsText(points);
+        // 初回（displayedPointsが未設定の場合）または値の乖離が大きい場合の同期
+        if (displayedPoints == 0 && points != 0)
+        {
+            StopPointsAnimation();
+            displayedPoints = points;
+            UpdatePointsText(points);
+        }
 
         HideCard();
         SetStatus("");
