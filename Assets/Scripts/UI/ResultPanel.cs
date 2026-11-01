@@ -12,12 +12,18 @@ public class ResultPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI winnerText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Button retryButton;
+    [SerializeField] private Button titleButton; // 追加：タイトルに戻るボタン
 
     private void Awake()
     {
         if (retryButton != null)
         {
             retryButton.onClick.AddListener(OnRetryClicked);
+        }
+
+        if (titleButton != null)
+        {
+            titleButton.onClick.AddListener(OnTitleClicked);
         }
     }
 
@@ -65,6 +71,15 @@ public class ResultPanel : MonoBehaviour
     /// リトライボタンクリック時：現在のシーンを再読み込みする
     /// </summary>
     private void OnRetryClicked()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
+    }
+
+    /// <summary>
+    /// タイトルに戻るボタンクリック時：シーンを再読み込みしてタイトル状態に戻す
+    /// </summary>
+    private void OnTitleClicked()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
