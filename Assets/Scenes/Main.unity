@@ -138,6 +138,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 216638379662619970, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -110
+      objectReference: {fileID: 0}
     - target: {fileID: 248784382447822408, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -170,6 +174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2951804703455815336, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: pointsText
+      value: 
+      objectReference: {fileID: 1021779922}
     - target: {fileID: 3028449225547603908, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_SizeDelta.x
       value: 600
@@ -198,6 +206,26 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 3199079198970733844, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Color.a
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199079198970733844, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199079198970733844, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199079198970733844, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199079198970733844, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3474238721593727774, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_fontColor.b
       value: 0
@@ -209,6 +237,26 @@ PrefabInstance:
     - target: {fileID: 3474238721593727774, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_fontColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109354156466308593, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336090829319902694, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336090829319902694, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Color.b
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336090829319902694, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Color.g
+      value: 0.627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336090829319902694, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_Color.r
+      value: 0.19607843
       objectReference: {fileID: 0}
     - target: {fileID: 5085341692011628532, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_IsActive
@@ -223,6 +271,10 @@ PrefabInstance:
       value: CloseText
       objectReference: {fileID: 0}
     - target: {fileID: 6531403724190865508, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589882221304913235, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -862,6 +914,17 @@ MonoBehaviour:
   nextButton: {fileID: 314510032}
   battleView: {fileID: 907248229}
   resultPanel: {fileID: 572732479}
+--- !u!114 &1021779922 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3076315843256200623, guid: d54b859b55d6eb241a61b05e0a6af9dd, type: 3}
+  m_PrefabInstance: {fileID: 314510031}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
